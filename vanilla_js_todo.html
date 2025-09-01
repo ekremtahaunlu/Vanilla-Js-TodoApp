@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern To-Do App with Vanilla JS</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Achieve Your Goals With To-Do App!</h1>
+            <p>Manage Your Life</p>
+            <div class="stats">
+                <div>📊 Total: <span id="totalCount">0</span></div>
+                <div>✅ Completed: <span id="completedCount">0</span></div>
+                <div>⏳ Pending: <span id="pendingCount">0</span></div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <form class="to-do form" id="todoForm">
+                <input 
+                    type="text"
+                    class="todo-input" 
+                    id="todoInput" 
+                    placeholder="Add new task..." 
+                    required
+                >
+            <button type="submit" class="add-btn">➕ Add</button>
+            </form>
+            
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
