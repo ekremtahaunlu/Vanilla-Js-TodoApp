@@ -187,3 +187,12 @@ class TodoApp {
     }
   }
 }
+  document.addEventListener('DOMContentLoaded', () => {
+    new TodoApp();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      document.getElementById('todoInput').focus();
+      }
+  });
