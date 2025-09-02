@@ -60,4 +60,58 @@ class TodoApp {
     this.render();
     this.updateStats();
   }
+
+  toggleTodo(id) {
+    this.todos = this.todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+
+    this.saveTodos();
+    this.render();
+    this.updateStats();
+  }
+
+  deleteTodo(id) {
+    this.todos = this.todos.filter(todo => todo.id !== id);
+    this.saveTodos();
+    this.render();
+    this.updateStats();
+  }
+
+  getFilteredTodos() {
+    const filters = {
+      all: () => this.todos,
+      pending: () => this.todos.filter(todo => !todo.completed),
+      completed: () => this.todos.filter(todo => todo.completed)
+    };
+
+    return filters[this.currentFilter]();
+  }
+
+  setFilter(filter) {
+    this.currentFilter = filter;
+
+    this.elements.filterBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.filter === filter);
+    });
+
+    this.render();
+  }
+
+  render() {
+    const filteredTodos = this.getFilteredTodos();
+    
+    if (filteredTodos.length === 0) {
+      this.renderEmptyState();
+      return;
+    }
+
+    const todosHTML = filteredTodos
+      .map(todo => this.createTodoHTML(todo))
+      .join('');
+
+    this.elements.todoList.innerHTML = todosHTML;
+
+    this.bindTodoEvents();
+  }
 }
