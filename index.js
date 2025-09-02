@@ -114,4 +114,76 @@ class TodoApp {
 
     this.bindTodoEvents();
   }
+  
+  createTodoHTML(todo) {
+    const { id, text, completed, createdAt } = todo;
+    return `
+      <div class="todo-item ${completed ? 'completed' : ''}" data-id="${id}">
+        <input
+          type="checkbox"
+          class="todo-checkbox"
+          ${completed ? 'checked' : ''}
+        >
+        <span class="todo-text">${text}</span>
+        <span class="todo-date">${createdAt}</span>
+        <button class="delete-btn">🗑️</button>
+      </div>
+    `;
+  }
+
+  renderEmptyState() {
+    const emptyMessages = {
+      all: 'No tasks available. Add a new task!',
+      pending: 'No pending tasks. Enjoy your day!',
+      completed: 'No completed tasks yet. Keep going!'
+    };
+
+    this.elements.todoList.innerHTML = `
+      <div class="empty-state">
+        <h3>${emptyMessages[this.currentFilter]}</h3>
+        <p>Start by adding a new task above.</p>
+      </div>
+    `;
+  }
+
+  bindTodoEvents() {
+    this.elements.todoList.addEventListener('click', (e) => {
+      const todoItem = e.target.closest('.todo-item');
+      if (!todoItem) return;
+
+      const id = parseInt(todoItem.dataset.id);
+
+      if (e.target.classList.contains('todo-checkbox')) {
+        this.toggleTodo(id);
+      } else if (e.target.classList.contains('delete-btn')) {
+        this.deleteTodo(id);
+      }
+    });
+  }
+
+  updateStats() {
+    const stats = this.todos.reduce((acc, todo) => ({
+      total: acc.total + 1,
+      completed: todo.completed ? acc.completed + 1 : acc.completed,
+      pending: !todo.completed ? acc.pending + 1 : acc.pending
+    }), { total: 0, completed: 0, pending: 0 });
+  }
+
+  saveTodos() {
+    try {
+      localStorage.setItem('todos', JSON.stringify(this.todos));
+    } catch (error) {
+      console.error('Error saving todos to localStorage:', error);
+    }
+  }
+
+  loadTodos() {
+    try {
+      const stored = localStorage.getItem('todos');
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error('Error loading todos from localStorage:', error);
+      return [];
+    }
+  }
 }
