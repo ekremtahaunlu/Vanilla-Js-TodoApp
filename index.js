@@ -28,4 +28,36 @@ class TodoApp {
     this.render();
     this.updateStats();
   }
+
+  bindEvents() {
+    this.elements.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.addTodo();
+    });
+
+    this.elements.filterBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        this.setFilter(e.target.dataset.filter);
+      });
+    });
+  }
+
+  addTodo() {
+    const todoText = this.elements.input.value.trim();
+    if (!todoText) return;
+
+    const newTodo = {
+      id: Date.now(),
+      text: todoText,
+      completed: false,
+      createdAt: new Date().toLocaleString('en-US')
+    };
+
+    this.todos = [...this.todos, newTodo];
+
+    this.elements.input.value = '';
+    this.saveTodos();
+    this.render();
+    this.updateStats();
+  }
 }
