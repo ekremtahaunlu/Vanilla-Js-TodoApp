@@ -234,6 +234,11 @@ class TodoApp {
       editBtn.className = 'edit-btn';
       editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
       editBtn.title = 'Edit task';
+      
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'todo-actions';
+      actionsDiv.appendChild(editBtn);
+      actionsDiv.appendChild(deleteBtn);
 
       todoDiv.appendChild(editBtn);
 
@@ -241,6 +246,7 @@ class TodoApp {
       todoDiv.appendChild(textSpan);
       todoDiv.appendChild(dateSpan);
       todoDiv.appendChild(deleteBtn);
+      todoDiv.appendChild(actionsDiv);
 
       return todoDiv;
   }
