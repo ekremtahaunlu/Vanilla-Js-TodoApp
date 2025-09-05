@@ -153,20 +153,27 @@ class TodoApp {
       this.updateStats();
       this.updateDebug();
   }
+deleteTodo(id) {
+    const confirmDelete = window.confirm("Bu görevi silmek istiyor musunuz?");
+    if (!confirmDelete) {
+        console.log('❌ Silme iptal edildi');
+        return;
+    }
 
-  deleteTodo(id) {    
-      const initialLength = this.todos.length;
-      this.todos = this.todos.filter(todo => todo.id !== id);
-      
-      if (this.todos.length < initialLength) {
-          this.saveTodos();
-          this.render();
-          this.updateStats();
-          this.updateDebug();
-      } else {
-          console.log('❌ Todo not found for deletion');
-      }
-  }
+    const initialLength = this.todos.length;
+    this.todos = this.todos.filter(todo => todo.id !== id);
+    
+    if (this.todos.length < initialLength) {
+        console.log('✅ Todo deleted');
+        this.saveTodos();
+        this.render();
+        this.updateStats();
+        this.updateDebug();
+    } else {
+        console.log('❌ Todo not found for deletion');
+    }
+}
+
 
   getFilteredTodos() {
       const filters = {
