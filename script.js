@@ -65,47 +65,45 @@ class TodoApp {
       if (e.target.classList.contains('todo-checkbox')) {
           e.stopPropagation();
           this.toggleTodo(todoId);
-
-        
-      } else if (e.target.classList.contains('delete-btn')) {
+      } else if (e.target.closest('.delete-btn')) {
           e.stopPropagation();
           this.deleteTodo(todoId);
-      } else if (e.target.classList.contains('edit-btn')) {
+      } else if (e.target.closest('.edit-btn')) {
           e.stopPropagation();
           this.startEditing(todoId, todoItem);
+      } 
     }
-}
 
-startEditing(id, todoItem) {
-    const todoIndex = this.todos.findIndex(todo => todo.id === id);
-    if (todoIndex === -1) return;
+    startEditing(id, todoItem) {
+        const todoIndex = this.todos.findIndex(todo => todo.id === id);
+        if (todoIndex === -1) return;
 
-    const oldText = this.todos[todoIndex].text;
-    const textSpan = todoItem.querySelector('.todo-text');
+        const oldText = this.todos[todoIndex].text;
+        const textSpan = todoItem.querySelector('.todo-text');
 
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'edit-input';
-    input.value = oldText;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'edit-input';
+        input.value = oldText;
 
-    todoItem.replaceChild(input, textSpan);
-    input.focus();
+        todoItem.replaceChild(input, textSpan);
+        input.focus();
 
-    const finish = () => {
-        const newText = input.value.trim();
-        if (newText && newText !== oldText) {
-            this.updateTodo(id, newText);
-        } else {
-            this.render();
-        }
-    };
+        const finish = () => {
+            const newText = input.value.trim();
+            if (newText && newText !== oldText) {
+                this.updateTodo(id, newText);
+            } else {
+                this.render();
+            }
+        };
 
-    input.addEventListener('blur', finish);
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') finish();
-        if (e.key === 'Escape') this.render();
-    });
-}
+        input.addEventListener('blur', finish);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') finish();
+            if (e.key === 'Escape') this.render();
+        });
+    }
 
 
   addTodo() {
@@ -229,14 +227,15 @@ startEditing(id, todoItem) {
 
       const deleteBtn = document.createElement('button');
       deleteBtn.className = 'delete-btn';
-      deleteBtn.textContent = '🗑️ Delete';
+      deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+      deleteBtn.title = 'Delete task';
 
       const editBtn = document.createElement('button');
       editBtn.className = 'edit-btn';
-      editBtn.textContent = '✏️ Edit';
+      editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
+      editBtn.title = 'Edit task';
 
       todoDiv.appendChild(editBtn);
-
 
       todoDiv.appendChild(checkbox);
       todoDiv.appendChild(textSpan);

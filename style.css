@@ -79,6 +79,34 @@ body {
   transform: translateY(-2px);
 }
 
+.todo-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 8px;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.edit-btn i {
+  color: #007bff; /* mavi */
+}
+
+.edit-btn:hover i {
+  color: #0056b3; /* koyu mavi */
+  transform: scale(1.2);
+}
+
+.delete-btn i {
+  color: #dc3545; /* kırmızı */
+}
+
+.delete-btn:hover i {
+  color: #a71d2a; /* koyu kırmızı */
+  transform: scale(1.2);
+}
+
+
 .filters {
   display: flex;
   justify-content: center;
